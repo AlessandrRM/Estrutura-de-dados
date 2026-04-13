@@ -1,41 +1,36 @@
 #include <stdio.h>
-float calcular_imc(float p, float a){
-    float i = 0;
-    if(p <=0 || a <=0){
-        return printf("Peso ou altura menor ou igual a 0\n");
-    }else{
-        i = p / (a*a);
-        if(i<18.5){
-            return printf("Abaixo, IMC : %.2f\n", i);
-        }else if (i<25.0)
-        {
-            return printf("Ideal, IMC : %.2f\n", i);
-        }else if (i<30.0)
-        {
-            return printf("Sobrepeso, IMC : %.2f\n", i);
-        }else if (i<35.0)
-        {
-            return printf("Obesidade 1, IMC : %.2f\n", i);
-        }else if (i<40.0)
-        {
-            return printf("Obesidade 2, IMC : %.2f\n", i);
-        }
-        else{
-            return printf("obesidade 3, IMC : %.2f\n", i);
-        }
-        return i;
+float calcular_imc(float peso, float altura) {
+    if (peso <= 0 || altura <= 0) {
+        return -1.0; 
+    }
+    return peso / (altura * altura);
+}
+
+void classificar_imc(float imc) {
+    if (imc < 0) {
+        printf("Erro: Peso ou altura invalidos.\n");
+        return;
     }
 
+    printf("IMC: %.2f - Status: ", imc);
+    if (imc < 18.5) printf("Abaixo do peso\n");
+    else if (imc < 25.0) printf("Peso ideal\n");
+    else if (imc < 30.0) printf("Sobrepeso\n");
+    else if (imc < 35.0) printf("Obesidade Grau I\n");
+    else if (imc < 40.0) printf("Obesidade Grau II\n");
+    else printf("Obesidade Grau III\n");
 }
 int main() {
-    float resultado;
-    resultado = calcular_imc(0,1.75);
-    resultado = calcular_imc(50.0f,0);
-    resultado = calcular_imc(50.0f,1.75f);
-    resultado = calcular_imc(65.0f,1.75f);
-    resultado = calcular_imc(85.0f,1.75f);
-    resultado = calcular_imc(95.0f,1.75f);
-    
-    
-    
+    float imc;
+    imc = calcular_imc(0, 1.75);
+    classificar_imc(imc);
+    imc = calcular_imc(50.0, 1.75);
+    classificar_imc(imc);
+    imc = calcular_imc(70.0, 1.75);
+    classificar_imc(imc);
+    imc = calcular_imc(85.0, 1.75);
+    classificar_imc(imc);
+    imc = calcular_imc(130.0, 1.75);
+    classificar_imc(imc);
+    return 0;
 }
