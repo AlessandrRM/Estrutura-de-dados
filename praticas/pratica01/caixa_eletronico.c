@@ -1,37 +1,44 @@
 #include <stdio.h>
-void processar_saque(int valor) {
+void processar_saque(int valor_original) {
     int cedulas[] = {200, 100, 50, 20, 10, 5, 2};
     int total_cedulas = sizeof(cedulas) / sizeof(cedulas[0]);
+    int valor = valor_original;
 
-    printf("\n--- Detalhes do Saque ---\n");
+    printf("Solicitacao: R$ %d\n", valor_original);
+
+    if (valor <= 0 || valor > 1000) {
+        printf("Resultado: Operacao Negada (Limite de R$ 2 a R$ 1000)\n");
+        return;
+    }
+
     for (int i = 0; i < total_cedulas; i++) {
         int qtd_notas = valor / cedulas[i];
         if (qtd_notas > 0) {
-            printf("%d nota(s) de R$ %d\n", qtd_notas, cedulas[i]);
-            valor %= cedulas[i]; 
+            printf("%d notas de R$ %d\n", qtd_notas, cedulas[i]);
+            valor %= cedulas[i];
         }
     }
 
     if (valor > 0) {
-        printf("Aviso: Nao foi possivel entregar R$ %d (notas indisponiveis).\n", valor);
+        printf(" -> Sobra: R$ %d (sem notas disponiveis)\n", valor);
     }
 }
 
 int main (){
-    int valor_saque;
-
-    printf("Digite o valor para saque (Limite R$ 1000): ");
-    if (scanf("%d", &valor_saque) != 1) {
-        printf("Erro: Entrada invalida.\n");
-        return 1;
-    }
-
-    
-    if (valor_saque <= 0 || valor_saque > 1000) {
-        printf("Operacao invalida! O valor deve ser entre R$ 2 e R$ 1000.\n");
-    } else {
-        processar_saque(valor_saque);
-    }
+    printf("===testes===\n");
+    printf("\n==========\n");
+    processar_saque(380);
+    printf("\n==========\n");
+    processar_saque(7);
+    printf("\n==========\n");
+    processar_saque(2);
+    printf("\n==========\n");
+    processar_saque(1000);
+    printf("\n==========\n");
+    processar_saque(1500);
+    printf("\n==========\n");
+    processar_saque(-50);
+    printf("\n==========\n");
 
     return 0;
 }
